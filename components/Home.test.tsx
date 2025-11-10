@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
-import Home from "./Home";
+import { render, screen } from "@testing-library/react";
+import { Home } from "./Home";
 
 function sum(a: number, b: number) {
   return a + b;
@@ -73,5 +73,27 @@ describe("Combine async test", () => {
   test("async test should not return abcd", async () => {
     const response = await getResponse();
     expect(response).toBe("Hello World");
+  });
+});
+
+describe("Testing Home Component", () => {
+  beforeEach(() => {
+    render(<Home />);
+  });
+  test("renders a heading", () => {
+    const heading = screen.getByRole("heading", {
+      name: /Home/i,
+    });
+    expect(heading).toBeInTheDocument();
+  });
+  test("renders a heading inside h1", () => {
+    const heading = screen.getByRole("heading", {level: 1});
+    expect(heading).toBeInTheDocument();
+    expect(heading).toHaveTextContent(/Home/i);
+  });
+  test("renders a description inside p", () => {
+    const paragraph = screen.getByTestId("desc");
+    expect(paragraph).toBeInTheDocument();
+    expect(paragraph).toHaveTextContent(/This is the home page/i);
   });
 });
