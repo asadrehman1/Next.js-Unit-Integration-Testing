@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
+import Home from "./Home";
 
 
 function sum(a: number, b: number) {
@@ -26,3 +27,27 @@ test("objects assign new properties", () => {
 test('There is a "stop" in Christoph', () => {
   expect("Christoph").toMatch(/stop/);
 })
+
+function getResponse() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hello World");
+    }, 1000);
+  });
+}
+
+// test("async test", async () => {
+//   const response = await getResponse();
+//   expect(response).toBe("Hello World");
+// });
+
+describe("Combine async test", () => {
+  test("async test should return Hello World", async () => {
+    const response = await getResponse();
+    expect(response).toBe("Hello World");
+  });
+  test("async test should not return abcd", async () => {
+    const response = await getResponse();
+    expect(response).toBe("Hello World");
+  });
+});
